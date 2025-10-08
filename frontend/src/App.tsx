@@ -6,11 +6,10 @@ import {
   Title,
   ActionIcon,
   Text,
-  Container,
-  Button,
   useMantineColorScheme,
 } from "@mantine/core";
 import { Sun, Moon, Briefcase } from "phosphor-react";
+import JobsPage from "./pages/JobsPage";
 
 export default function App() {
   const [opened, setOpened] = useState(false);
@@ -19,7 +18,11 @@ export default function App() {
   return (
     <AppShell
       header={{ height: 60 }}
-      navbar={{ width: 220, breakpoint: "sm", collapsed: { mobile: !opened } }}
+      navbar={{
+        width: 220,
+        breakpoint: "sm",
+        collapsed: { mobile: !opened },
+      }}
       padding="md"
     >
       {/* Header */}
@@ -48,7 +51,7 @@ export default function App() {
         </Group>
       </AppShell.Header>
 
-      {/* Sidebar (collapsed on mobile) */}
+      {/* Sidebar */}
       <AppShell.Navbar p="sm">
         <Group>
           <Briefcase size={18} />
@@ -58,16 +61,7 @@ export default function App() {
 
       {/* Main content */}
       <AppShell.Main>
-        <Container>
-          <Title order={2} mb="sm">
-            Welcome to CTS
-          </Title>
-          <Text c="dimmed" mb="md">
-            This is a quick prototype of the frontend using Mantine and Phosphor
-            icons.
-          </Text>
-          <Button leftSection={<Briefcase size={18} />}>Test Button</Button>
-        </Container>
+        <JobsPage />
       </AppShell.Main>
     </AppShell>
   );
