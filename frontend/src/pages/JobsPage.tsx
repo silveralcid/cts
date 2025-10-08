@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import {
   Title,
   Container,
@@ -8,24 +8,49 @@ import {
   Button,
   Stack,
   Text,
+  Loader,
+  Center,
 } from "@mantine/core";
 import { MagnifyingGlass } from "phosphor-react";
-import { mockJobs } from "../api/mockJobs";
+import { useQuery } from "@tanstack/react-query";
+import { getJobs } from "../api/jobs";
 import JobTable from "../components/JobTable";
 
 export default function JobsPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
-  const filteredJobs = useMemo(() => {
-    return mockJobs.filter((job) => {
-      const matchesSearch =
-        job.position_title.toLowerCase().includes(search.toLowerCase()) ||
-        job.company.name.toLowerCase().includes(search.toLowerCase());
-      const matchesStatus = !statusFilter || job.status === statusFilter;
-      return matchesSearch && matchesStatus;
-    });
-  }, [search, statusFilter]);
+  // 🔥 Fetch data with React Query
+  const {
+    data: jobs = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["jobs"],
+    queryFn: getJobs,
+  });
+
+  const filteredJobs = jobs.filter((job) => {
+    const matchesSearch =
+      job.position_title.toLowerCase().includes(search.toLowerCase()) ||
+      job.company.name.toLowerCase().includes(search.toLowerCase());
+    const matchesStatus = !statusFilter || job.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  if (isLoading)
+    return (
+      <Center mt="xl">
+        <Loader />
+      </Center>
+    );
+
+  if (isError)
+    return (
+      <Center mt="xl">
+        <Text c="red">Failed to load jobs.</Text>
+      </Center>
+    );
 
   return (
     <Container>
@@ -33,7 +58,7 @@ export default function JobsPage() {
         Jobs
       </Title>
       <Text size="sm" c="dimmed" mb="md">
-        Search or filter to focus on specific roles.
+        Browse and manage your job applications.
       </Text>
 
       <Stack gap="sm" mb="md">
