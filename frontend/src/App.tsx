@@ -9,7 +9,10 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import { Sun, Moon, Briefcase } from "phosphor-react";
+import { Routes, Route, Link } from "react-router-dom";
+
 import JobsPage from "./pages/JobsPage";
+import JobDetailPage from "./pages/JobDetailPage";
 
 export default function App() {
   const [opened, setOpened] = useState(false);
@@ -25,7 +28,6 @@ export default function App() {
       }}
       padding="md"
     >
-      {/* Header */}
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
           <Group>
@@ -51,17 +53,18 @@ export default function App() {
         </Group>
       </AppShell.Header>
 
-      {/* Sidebar */}
       <AppShell.Navbar p="sm">
-        <Group>
+        <Group component={Link} to="/jobs" style={{ cursor: "pointer" }}>
           <Briefcase size={18} />
           <Text fw={500}>Jobs</Text>
         </Group>
       </AppShell.Navbar>
 
-      {/* Main content */}
       <AppShell.Main>
-        <JobsPage />
+        <Routes>
+          <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/jobs/:id" element={<JobDetailPage />} />
+        </Routes>
       </AppShell.Main>
     </AppShell>
   );

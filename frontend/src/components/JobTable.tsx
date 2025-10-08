@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Table, Badge, Group, Text, Anchor } from "@mantine/core";
 import { ArrowUp, ArrowDown } from "phosphor-react";
+import { useNavigate } from "react-router-dom";
 import type { Job } from "../api/mockJobs";
 
 type SortKey =
@@ -11,6 +12,8 @@ type SortKey =
   | "pay_scale";
 
 export default function JobTable({ jobs }: { jobs: Job[] }) {
+  const navigate = useNavigate(); // ✅ define before use
+
   const [sortKey, setSortKey] = useState<SortKey>("priority");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
@@ -23,7 +26,6 @@ export default function JobTable({ jobs }: { jobs: Job[] }) {
     }
   };
 
-  // Helper for pay scale sorting
   const extractNumeric = (val?: string | null) => {
     if (!val) return 0;
     const match = val.match(/\d+/g);
@@ -69,7 +71,11 @@ export default function JobTable({ jobs }: { jobs: Job[] }) {
     ) : null;
 
   const rows = sortedJobs.map((job) => (
-    <Table.Tr key={job.id}>
+    <Table.Tr
+      key={job.id}
+      onClick={() => navigate(`/jobs/${job.id}`)}
+      style={{ cursor: "pointer" }}
+    >
       <Table.Td>
         <Group gap="xs">
           <Text fw={500}>{job.position_title}</Text>
