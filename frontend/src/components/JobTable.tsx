@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Table, Badge, Group, Text, Anchor } from "@mantine/core";
 import { ArrowUp, ArrowDown } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
-import type { Job } from "../api/mockJobs";
+import type { Job } from "../types/job";
 
 type SortKey =
   | "position_title"

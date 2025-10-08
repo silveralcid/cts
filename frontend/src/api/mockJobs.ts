@@ -1,39 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-
-export type Company = {
-  id: string;
-  name: string;
-  website?: string | null;
-};
-
-export type Job = {
-  id: string;
-  company: Company;
-  position_title: string;
-  status:
-    | "BOOKMARKED"
-    | "APPLYING"
-    | "APPLIED"
-    | "INTERVIEWING"
-    | "NEGOTIATING"
-    | "ACCEPTED"
-    | "WITHDREW"
-    | "NOT_ACCEPTED"
-    | "NO_RESPONSE"
-    | "ARCHIVED";
-  priority: number;
-  job_post_url?: string | null;
-  job_notes?: string | null;
-  date_deadline?: string | null;
-  date_applied?: string | null;
-  date_posted?: string | null;
-  pay_scale?: string | null;
-  location?: string | null;
-  department?: string | null;
-  employment_type?: string | null;
-  created_at: string;
-  updated_at: string;
-};
+import type { Job } from "../types/job";
+import type { Company } from "../types/company";
 
 // Mock companies
 export const mockCompanies: Company[] = [
