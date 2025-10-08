@@ -13,6 +13,8 @@ import { Routes, Route, Link } from "react-router-dom";
 
 import JobsPage from "./pages/JobsPage";
 import JobDetailPage from "./pages/JobDetailPage";
+import CompanyPage from "./pages/CompanyPage";
+import CompanyDetailPage from "./pages/CompanyDetailPage";
 
 export default function App() {
   const [opened, setOpened] = useState(false);
@@ -58,12 +60,18 @@ export default function App() {
           <Briefcase size={18} />
           <Text fw={500}>Jobs</Text>
         </Group>
+        <Group component={Link} to="/companies" style={{ cursor: "pointer" }}>
+          <Briefcase size={18} />
+          <Text fw={500}>Companies</Text>
+        </Group>
       </AppShell.Navbar>
 
       <AppShell.Main>
         <Routes>
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/jobs/:id" element={<JobDetailPage />} />
+          <Route path="/companies" element={<CompanyPage />} />
+          <Route path="/companies/:id" element={<CompanyDetailPage />} />
         </Routes>
       </AppShell.Main>
     </AppShell>
