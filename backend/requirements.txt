@@ -1,5 +1,7 @@
 django
 djangorestframework
 django-filter
+django-stubs
 drf-spectacular
 python-dotenv
+pylint
