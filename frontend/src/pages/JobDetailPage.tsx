@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getJobById } from "../api/jobs";
 import {
@@ -15,7 +15,12 @@ import {
   SimpleGrid,
   Card,
 } from "@mantine/core";
-import { Briefcase, Calendar, Link as LinkIcon, MapPin } from "phosphor-react";
+import {
+  Briefcase,
+  Link as LinkIcon,
+  MapPin,
+  ArrowSquareOut,
+} from "phosphor-react";
 
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -62,9 +67,17 @@ export default function JobDetailPage() {
           </Badge>
         </Group>
 
+        {/* Company link section */}
         <Group gap="xs" c="dimmed">
           <Briefcase size={16} />
-          <Text>{job.company.name}</Text>
+          <Anchor
+            component={Link}
+            to={`/companies/${job.company.id}`}
+            underline="hover"
+          >
+            {job.company.name}
+          </Anchor>
+
           {job.location && (
             <>
               <MapPin size={16} />
@@ -73,6 +86,7 @@ export default function JobDetailPage() {
           )}
         </Group>
 
+        {/* External job post link */}
         {job.job_post_url && (
           <Anchor
             href={job.job_post_url}
@@ -83,6 +97,7 @@ export default function JobDetailPage() {
             <Group gap="xs">
               <LinkIcon size={14} />
               <Text size="sm">View Original Posting</Text>
+              <ArrowSquareOut size={12} weight="fill" />
             </Group>
           </Anchor>
         )}
