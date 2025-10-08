@@ -5,3 +5,4 @@ django-stubs
 drf-spectacular
 python-dotenv
 pylint
+django-cors-headers
