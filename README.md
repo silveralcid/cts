@@ -1,4 +1,4 @@
-```markdown
+
 # 🧭 Career Tracking System (CTS)
 
 ## 📄 Project Summary
@@ -58,8 +58,4 @@ CTS provides a **self-hosted, privacy-first** platform for managing all job sear
 ## 🚀 Future Ideas
 - AI-based resume–job fit scoring  
 - Browser extension for one-click job imports  
-- Email parsing for recruiter threads  
-- Integration with Notion, Airtable, or GHL  
-
----
-```
+- Email parsing for recruiter threads
