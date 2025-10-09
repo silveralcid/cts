@@ -1,9 +1,8 @@
-import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getJobById } from "../api/jobs";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getJobById, deleteJob } from "../api/jobs";
+import { deleteAttachment } from "../api/attachments";
 import { FileUploadCard } from "../components/FileUploadCard";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 import {
   Container,
   Title,
@@ -29,11 +28,13 @@ import {
   Paperclip,
   Trash,
 } from "phosphor-react";
-import { deleteAttachment } from "../api/attachments";
 
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
+  // ✅ Fetch job
   const {
     data: job,
     isLoading,
@@ -42,6 +43,15 @@ export default function JobDetailPage() {
     queryKey: ["job", id],
     queryFn: () => getJobById(id!),
     enabled: !!id,
+  });
+
+  // ✅ Define deleteJobMutation at top level (not inside AttachmentItem)
+  const deleteJobMutation = useMutation({
+    mutationFn: () => deleteJob(job!.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      navigate("/jobs");
+    },
   });
 
   if (isLoading)
@@ -58,6 +68,7 @@ export default function JobDetailPage() {
       </Center>
     );
 
+  // Helper renderers
   const renderDate = (label: string, date?: string | null) => (
     <Group justify="space-between">
       <Text fw={500}>{label}</Text>
@@ -75,7 +86,7 @@ export default function JobDetailPage() {
     return "—";
   };
 
-  // Inside JobDetailPage.tsx or separate file AttachmentItem.tsx
+  // ✅ Local component only for attachments
   function AttachmentItem({
     attachment,
     jobId,
@@ -83,8 +94,6 @@ export default function JobDetailPage() {
     attachment: any;
     jobId: string;
   }) {
-    const queryClient = useQueryClient();
-
     const mutation = useMutation({
       mutationFn: () => deleteAttachment(attachment.id),
       onSuccess: () => {
@@ -123,18 +132,31 @@ export default function JobDetailPage() {
     );
   }
 
+  // ✅ Main return
   return (
     <Container size="md" py="xl">
       {/* Header */}
       <Stack gap="xs" mb="xl">
         <Group justify="space-between">
           <Title order={2}>{job.position_title}</Title>
-          <Badge color="blue" size="lg">
-            {job.status}
-          </Badge>
+          <Group>
+            <Badge color="blue" size="lg">
+              {job.status}
+            </Badge>
+            <ActionIcon
+              color="red"
+              variant="light"
+              onClick={() => {
+                if (confirm("Delete this job?")) deleteJobMutation.mutate();
+              }}
+              loading={deleteJobMutation.isPending}
+            >
+              <Trash size={16} />
+            </ActionIcon>
+          </Group>
         </Group>
 
-        {/* Company link section */}
+        {/* Company link */}
         <Group gap="xs" c="dimmed">
           <Briefcase size={16} />
           <Anchor
@@ -153,7 +175,7 @@ export default function JobDetailPage() {
           )}
         </Group>
 
-        {/* External job post link */}
+        {/* External link */}
         {job.job_post_url && (
           <Anchor
             href={job.job_post_url}
@@ -170,9 +192,9 @@ export default function JobDetailPage() {
         )}
       </Stack>
 
+      {/* Overview */}
       <Divider label="Overview" labelPosition="center" mb="md" />
 
-      {/* Key fields */}
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="sm" mb="lg">
         <Text>
           <b>Priority:</b> {job.priority}
@@ -210,7 +232,7 @@ export default function JobDetailPage() {
         </Stack>
       </Card>
 
-      {/* Descriptions */}
+      {/* Details */}
       <Stack gap="xl">
         {job.about && (
           <section>

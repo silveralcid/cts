@@ -1,6 +1,10 @@
-import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getCompanyById, getCompanyJobs } from "../api/companies";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  deleteCompany,
+  getCompanyById,
+  getCompanyJobs,
+} from "../api/companies";
 import {
   Container,
   Title,
@@ -14,12 +18,17 @@ import {
   Badge,
   Stack,
   Card,
+  ActionIcon,
+  Tooltip,
 } from "@mantine/core";
-import { Briefcase, Globe } from "phosphor-react";
+import { Briefcase, Globe, Trash } from "phosphor-react";
 
 export default function CompanyDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
+  // ✅ Fetch company and jobs first
   const {
     data: company,
     isLoading: loadingCompany,
@@ -38,6 +47,15 @@ export default function CompanyDetailPage() {
     queryKey: ["company-jobs", id],
     queryFn: () => getCompanyJobs(id!),
     enabled: !!id,
+  });
+
+  // ✅ Now define delete mutation safely after company is available
+  const deleteCompanyMutation = useMutation({
+    mutationFn: () => deleteCompany(company!.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["companies"] });
+      navigate("/companies");
+    },
   });
 
   if (loadingCompany || loadingJobs)
@@ -59,7 +77,24 @@ export default function CompanyDetailPage() {
       {/* Header */}
       <Group justify="space-between" mb="md" align="flex-start">
         <Stack gap={4}>
-          <Title order={2}>{company.name}</Title>
+          <Group justify="space-between" align="center">
+            <Title order={2}>{company.name}</Title>
+            <Tooltip label="Delete this company">
+              <ActionIcon
+                color="red"
+                variant="light"
+                onClick={() => {
+                  if (confirm("Delete this company and all related jobs?")) {
+                    deleteCompanyMutation.mutate();
+                  }
+                }}
+                loading={deleteCompanyMutation.isPending}
+              >
+                <Trash size={16} />
+              </ActionIcon>
+            </Tooltip>
+          </Group>
+
           <Group gap="xs">
             {company.is_nonprofit && <Badge color="green">Non-Profit</Badge>}
             {company.industry && (

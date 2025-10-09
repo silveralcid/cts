@@ -17,3 +17,7 @@ export async function getCompanyJobs(id: string): Promise<Job[]> {
   const res = await api.get<Job[]>(`/companies/${id}/jobs/`);
   return res.data;
 }
+
+export async function deleteCompany(id: string): Promise<void> {
+  await api.delete(`/companies/${id}/`);
+}
