@@ -19,3 +19,8 @@ export async function createJob(newJob: Partial<Job>): Promise<Job> {
   const { data } = await api.post<Job>("/jobs/", newJob);
   return data;
 }
+
+export async function updateJob(id: string, data: Partial<Job>): Promise<Job> {
+  const res = await api.put<Job>(`/jobs/${id}/`, data);
+  return res.data;
+}

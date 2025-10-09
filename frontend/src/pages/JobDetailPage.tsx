@@ -19,6 +19,7 @@ import {
   List,
   ActionIcon,
   Tooltip,
+  Button,
 } from "@mantine/core";
 import {
   Briefcase,
@@ -153,6 +154,14 @@ export default function JobDetailPage() {
             >
               <Trash size={16} />
             </ActionIcon>
+            <Button
+              component={Link}
+              to={`/jobs/${job.id}/edit`}
+              variant="light"
+              color="blue"
+            >
+              Edit
+            </Button>
           </Group>
         </Group>
 
