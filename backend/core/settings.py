@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_spectacular',
     'corsheaders',
+    'storages',
 
     # Local Apps
     'jobs',
@@ -127,6 +128,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -144,3 +148,25 @@ CORS_ALLOW_CREDENTIALS = True
 #     "https://yourfrontend.com",
 #     "https://staging.yourfrontend.com",
 # ]
+
+
+# =============================================================================
+# FILE STORAGE (MinIO for local dev, AWS S3 compatible)
+# =============================================================================
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+AWS_S3_ENDPOINT_URL = "http://localhost:9000"
+AWS_ACCESS_KEY_ID = "admin"
+AWS_SECRET_ACCESS_KEY = "admin"
+AWS_STORAGE_BUCKET_NAME = "cts-local"
+AWS_S3_REGION_NAME = "us-east-1"
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_USE_SSL = False
+
+# Optional: auto-create bucket if it doesn’t exist (safe for MinIO, not AWS)
+AWS_S3_CREATE_BUCKET = True
+
+# Optional: make files publicly readable (fine for dev)
+AWS_DEFAULT_ACL = "public-read"
+AWS_QUERYSTRING_AUTH = False
