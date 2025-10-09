@@ -14,3 +14,8 @@ export async function getJobById(id: string): Promise<Job> {
 export async function deleteJob(id: string): Promise<void> {
   await api.delete(`/jobs/${id}/`);
 }
+
+export async function createJob(newJob: Partial<Job>): Promise<Job> {
+  const { data } = await api.post<Job>("/jobs/", newJob);
+  return data;
+}

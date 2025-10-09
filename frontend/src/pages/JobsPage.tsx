@@ -15,8 +15,10 @@ import { MagnifyingGlass } from "phosphor-react";
 import { useQuery } from "@tanstack/react-query";
 import { getJobs } from "../api/jobs";
 import JobTable from "../components/JobTable";
+import { useNavigate } from "react-router-dom";
 
 export default function JobsPage() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
@@ -54,12 +56,12 @@ export default function JobsPage() {
 
   return (
     <Container>
-      <Title order={2} mb="sm">
-        Jobs
-      </Title>
-      <Text size="sm" c="dimmed" mb="md">
-        Browse and manage your job applications.
-      </Text>
+      <Group justify="space-between" mb="md">
+        <Title order={2}>Jobs</Title>
+        <Button onClick={() => navigate("/jobs/new")} color="blue">
+          + New Job
+        </Button>
+      </Group>
 
       <Stack gap="sm" mb="md">
         <Group grow>
