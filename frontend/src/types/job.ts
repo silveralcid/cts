@@ -1,3 +1,4 @@
+import type { Attachment } from "./attachment";
 import type { Company } from "./company";
 
 /**
@@ -74,4 +75,7 @@ export interface Job {
   created_at: string;
   updated_at: string;
   archived_at?: string | null;
+
+  // Associated
+  attachments?: Attachment[];
 }
