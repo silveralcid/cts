@@ -14,12 +14,14 @@ import {
   Center,
   SimpleGrid,
   Card,
+  List,
 } from "@mantine/core";
 import {
   Briefcase,
   Link as LinkIcon,
   MapPin,
   ArrowSquareOut,
+  Paperclip,
 } from "phosphor-react";
 
 export default function JobDetailPage() {
@@ -55,6 +57,16 @@ export default function JobDetailPage() {
       <Text c="dimmed">{date ? new Date(date).toLocaleDateString() : "—"}</Text>
     </Group>
   );
+
+  const renderSalary = () => {
+    if (job.salary_min || job.salary_max || job.salary_currency) {
+      const min = job.salary_min ? job.salary_min.toLocaleString() : "—";
+      const max = job.salary_max ? job.salary_max.toLocaleString() : "—";
+      const cur = job.salary_currency || "";
+      return `${cur} ${min} - ${max}`;
+    }
+    return "—";
+  };
 
   return (
     <Container size="md" py="xl">
@@ -117,7 +129,13 @@ export default function JobDetailPage() {
           <b>Employment Type:</b> {job.employment_type || "—"}
         </Text>
         <Text>
-          <b>Pay Scale:</b> {job.pay_scale || "—"}
+          <b>Role Type:</b> {job.role_type || "—"}
+        </Text>
+        <Text>
+          <b>Remote:</b> {job.is_remote ? "Yes" : "No"}
+        </Text>
+        <Text>
+          <b>Salary Range:</b> {renderSalary()}
         </Text>
       </SimpleGrid>
 
@@ -140,46 +158,66 @@ export default function JobDetailPage() {
       {/* Descriptions */}
       <Stack gap="xl">
         {job.about && (
-          <div>
+          <section>
             <Title order={4}>About</Title>
             <Text c="dimmed" mt="xs">
               {job.about}
             </Text>
-          </div>
+          </section>
         )}
 
         {job.requirements && (
-          <div>
+          <section>
             <Title order={4}>Requirements</Title>
             <Text c="dimmed" mt="xs" style={{ whiteSpace: "pre-line" }}>
               {job.requirements}
             </Text>
-          </div>
+          </section>
         )}
 
         {job.responsibilities && (
-          <div>
+          <section>
             <Title order={4}>Responsibilities</Title>
             <Text c="dimmed" mt="xs" style={{ whiteSpace: "pre-line" }}>
               {job.responsibilities}
             </Text>
-          </div>
+          </section>
         )}
 
         {job.benefits && (
-          <div>
+          <section>
             <Title order={4}>Benefits</Title>
             <Text c="dimmed" mt="xs">
               {job.benefits}
             </Text>
-          </div>
+          </section>
         )}
 
         {job.job_notes && (
-          <div>
+          <section>
             <Title order={4}>Notes</Title>
             <Text mt="xs">{job.job_notes}</Text>
-          </div>
+          </section>
+        )}
+
+        {/* Attachments */}
+        {job.attachments && job.attachments.length > 0 && (
+          <section>
+            <Divider label="Attachments" labelPosition="center" my="md" />
+            <List spacing="xs" icon={<Paperclip size={14} />}>
+              {job.attachments.map((a) => (
+                <List.Item key={a.id}>
+                  <Anchor
+                    href={a.file}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {a.filename || "Download file"} ({a.type})
+                  </Anchor>
+                </List.Item>
+              ))}
+            </List>
+          </section>
         )}
       </Stack>
     </Container>
