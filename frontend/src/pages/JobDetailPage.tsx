@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getJobById } from "../api/jobs";
+
 import {
   Container,
   Title,
@@ -23,6 +24,7 @@ import {
   ArrowSquareOut,
   Paperclip,
 } from "phosphor-react";
+import { FileUploadCard } from "../components/FileUploadCard";
 
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -201,6 +203,7 @@ export default function JobDetailPage() {
         )}
 
         {/* Attachments */}
+        <FileUploadCard jobId={job.id} />
         {job.attachments && job.attachments.length > 0 && (
           <section>
             <Divider label="Attachments" labelPosition="center" my="md" />
