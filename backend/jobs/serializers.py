@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Job
+from jobs.models import Company, Job, Attachment
 
 
 class CompanySerializer(serializers.ModelSerializer):
