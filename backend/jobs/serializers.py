@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Job
+from jobs.models import Company, Job, Attachment
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -18,3 +18,20 @@ class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = "__all__"
+
+
+class AttachmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attachment
+        fields = [
+            "id",
+            "job",
+            "type",
+            "file",
+            "filename",
+            "mime_type",
+            "size_bytes",
+            "uploaded_at",
+        ]
+        read_only_fields = ["filename", "mime_type",
+                            "size_bytes", "uploaded_at"]

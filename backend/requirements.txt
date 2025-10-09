@@ -7,3 +7,5 @@ python-dotenv
 pylint
 django-cors-headers
 faker
+boto3
+django-storages

@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Job, Company
-from .serializers import JobSerializer, CompanySerializer
+from .models import Job, Company, Attachment
+from .serializers import JobSerializer, CompanySerializer, AttachmentSerializer
 
 
 class JobViewSet(viewsets.ModelViewSet):
@@ -21,3 +21,8 @@ class CompanyViewSet(viewsets.ModelViewSet):
         jobs = Job.objects.filter(company=company)
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
+
+
+class AttachmentViewSet(viewsets.ModelViewSet):
+    queryset = Attachment.objects.all()
+    serializer_class = AttachmentSerializer
