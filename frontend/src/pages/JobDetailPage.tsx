@@ -1,6 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getJobById } from "../api/jobs";
+import { FileUploadCard } from "../components/FileUploadCard";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
   Container,
@@ -16,6 +18,8 @@ import {
   SimpleGrid,
   Card,
   List,
+  ActionIcon,
+  Tooltip,
 } from "@mantine/core";
 import {
   Briefcase,
@@ -23,8 +27,9 @@ import {
   MapPin,
   ArrowSquareOut,
   Paperclip,
+  Trash,
 } from "phosphor-react";
-import { FileUploadCard } from "../components/FileUploadCard";
+import { deleteAttachment } from "../api/attachments";
 
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -69,6 +74,54 @@ export default function JobDetailPage() {
     }
     return "—";
   };
+
+  // Inside JobDetailPage.tsx or separate file AttachmentItem.tsx
+  function AttachmentItem({
+    attachment,
+    jobId,
+  }: {
+    attachment: any;
+    jobId: string;
+  }) {
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation({
+      mutationFn: () => deleteAttachment(attachment.id),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["job", jobId] });
+      },
+    });
+
+    return (
+      <List.Item
+        key={attachment.id}
+        icon={<Paperclip size={14} />}
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <Group gap="xs" justify="space-between" w="100%">
+          <Anchor
+            href={attachment.file}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {attachment.filename || "Download file"} ({attachment.type})
+          </Anchor>
+
+          <Tooltip label="Delete attachment">
+            <ActionIcon
+              color="red"
+              variant="light"
+              size="sm"
+              onClick={() => mutation.mutate()}
+              loading={mutation.isPending}
+            >
+              <Trash size={14} />
+            </ActionIcon>
+          </Tooltip>
+        </Group>
+      </List.Item>
+    );
+  }
 
   return (
     <Container size="md" py="xl">
@@ -209,15 +262,7 @@ export default function JobDetailPage() {
             <Divider label="Attachments" labelPosition="center" my="md" />
             <List spacing="xs" icon={<Paperclip size={14} />}>
               {job.attachments.map((a) => (
-                <List.Item key={a.id}>
-                  <Anchor
-                    href={a.file}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {a.filename || "Download file"} ({a.type})
-                  </Anchor>
-                </List.Item>
+                <AttachmentItem key={a.id} attachment={a} jobId={job.id} />
               ))}
             </List>
           </section>

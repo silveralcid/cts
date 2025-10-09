@@ -16,3 +16,12 @@ export async function uploadAttachment(
   });
   return data;
 }
+
+export async function getAttachments(): Promise<Attachment[]> {
+  const { data } = await api.get<Attachment[]>("/attachments/");
+  return data;
+}
+
+export async function deleteAttachment(id: string): Promise<void> {
+  await api.delete(`/attachments/${id}/`);
+}
