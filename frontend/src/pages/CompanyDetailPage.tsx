@@ -11,8 +11,11 @@ import {
   Anchor,
   Table,
   Divider,
+  Badge,
+  Stack,
+  Card,
 } from "@mantine/core";
-import { Briefcase } from "phosphor-react";
+import { Briefcase, Globe } from "phosphor-react";
 
 export default function CompanyDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -52,22 +55,79 @@ export default function CompanyDetailPage() {
     );
 
   return (
-    <Container size="md">
-      <Group justify="space-between" mb="md">
-        <Title order={2}>{company.name}</Title>
+    <Container size="md" py="xl">
+      {/* Header */}
+      <Group justify="space-between" mb="md" align="flex-start">
+        <Stack gap={4}>
+          <Title order={2}>{company.name}</Title>
+          <Group gap="xs">
+            {company.is_nonprofit && <Badge color="green">Non-Profit</Badge>}
+            {company.industry && (
+              <Badge color="blue" variant="light">
+                {company.industry}
+              </Badge>
+            )}
+            {company.stage && (
+              <Badge color="gray" variant="light">
+                {company.stage}
+              </Badge>
+            )}
+            {company.size && (
+              <Badge color="orange" variant="light">
+                {company.size} employees
+              </Badge>
+            )}
+          </Group>
+        </Stack>
+
         {company.website && (
           <Anchor
             href={company.website}
             target="_blank"
             rel="noopener noreferrer"
           >
-            Visit Website
+            <Group gap={4}>
+              <Globe size={16} />
+              <Text size="sm">Visit Website</Text>
+            </Group>
           </Anchor>
         )}
       </Group>
 
+      {/* Overview Card */}
+      <Card withBorder shadow="xs" mb="xl">
+        <Stack gap="xs">
+          {company.founding_year && (
+            <Text>
+              <b>Founded:</b> {company.founding_year}
+            </Text>
+          )}
+          {company.funding && (
+            <Text>
+              <b>Funding:</b> {company.funding}
+            </Text>
+          )}
+          {company.keywords && company.keywords.length > 0 && (
+            <Text>
+              <b>Keywords:</b>{" "}
+              {company.keywords.map((k: string) => (
+                <Badge key={k} color="teal" variant="light" mx={2}>
+                  {k}
+                </Badge>
+              ))}
+            </Text>
+          )}
+          {company.notes && (
+            <Text c="dimmed" mt="sm">
+              {company.notes}
+            </Text>
+          )}
+        </Stack>
+      </Card>
+
       <Divider label="Jobs at this company" labelPosition="center" mb="md" />
 
+      {/* Job list */}
       {jobs.length === 0 ? (
         <Text c="dimmed">No jobs found for this company.</Text>
       ) : (
