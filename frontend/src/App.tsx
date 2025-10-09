@@ -15,6 +15,7 @@ import JobsPage from "./pages/JobsPage";
 import JobDetailPage from "./pages/JobDetailPage";
 import CompanyPage from "./pages/CompanyPage";
 import CompanyDetailPage from "./pages/CompanyDetailPage";
+import CompanyCreatePage from "./pages/CompanyCreatePage";
 
 export default function App() {
   const [opened, setOpened] = useState(false);
@@ -72,6 +73,7 @@ export default function App() {
           <Route path="/jobs/:id" element={<JobDetailPage />} />
           <Route path="/companies" element={<CompanyPage />} />
           <Route path="/companies/:id" element={<CompanyDetailPage />} />
+          <Route path="/companies/new" element={<CompanyCreatePage />} />
         </Routes>
       </AppShell.Main>
     </AppShell>

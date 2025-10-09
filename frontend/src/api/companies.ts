@@ -21,3 +21,10 @@ export async function getCompanyJobs(id: string): Promise<Job[]> {
 export async function deleteCompany(id: string): Promise<void> {
   await api.delete(`/companies/${id}/`);
 }
+
+export async function createCompany(
+  newCompany: Partial<Company>
+): Promise<Company> {
+  const { data } = await api.post<Company>("/companies/", newCompany);
+  return data;
+}
