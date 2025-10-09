@@ -28,3 +28,11 @@ export async function createCompany(
   const { data } = await api.post<Company>("/companies/", newCompany);
   return data;
 }
+
+export async function updateCompany(
+  id: string,
+  data: Partial<Company>
+): Promise<Company> {
+  const res = await api.put<Company>(`/companies/${id}/`, data);
+  return res.data;
+}

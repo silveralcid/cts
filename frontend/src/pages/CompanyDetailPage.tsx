@@ -20,6 +20,7 @@ import {
   Card,
   ActionIcon,
   Tooltip,
+  Button,
 } from "@mantine/core";
 import { Briefcase, Globe, Trash } from "phosphor-react";
 
@@ -93,6 +94,14 @@ export default function CompanyDetailPage() {
                 <Trash size={16} />
               </ActionIcon>
             </Tooltip>
+            <Button
+              component={Link}
+              to={`/companies/${company.id}/edit`}
+              variant="light"
+              color="blue"
+            >
+              Edit
+            </Button>
           </Group>
 
           <Group gap="xs">
