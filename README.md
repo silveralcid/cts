@@ -1,6 +1,16 @@
 
 # 🧭 Career Tracking System (CTS)
 
+## Quick Notes
+
+Download MinIO mc client, windows add to path: https://www.min.io/download?platform=windows
+
+```
+mc alias set local http://localhost:9000 admin password
+mc anonymous set public local/cts-local
+
+```
+
 ## 📄 Project Summary
 Career Tracking System (CTS) is an **open-source web app** that helps job seekers organize their entire job search pipeline. It centralizes job listings, resumes, application statuses, key dates, and notes—all within a **fast, minimalist interface**.  
 The goal is to make personal career management more structured, searchable, and exportable.

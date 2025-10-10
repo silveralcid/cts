@@ -3,6 +3,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getJobById, deleteJob } from "../api/jobs";
 import { deleteAttachment } from "../api/attachments";
 import { FileUploadCard } from "../components/FileUploadCard";
+import { useDisclosure } from "@mantine/hooks";
+
 import {
   Container,
   Title,
@@ -29,6 +31,7 @@ import {
   Paperclip,
   Trash,
 } from "phosphor-react";
+import { FileViewerModal } from "../components/FileViewerModal";
 
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -95,41 +98,46 @@ export default function JobDetailPage() {
     attachment: any;
     jobId: string;
   }) {
+    const [opened, { open, close }] = useDisclosure(false);
     const mutation = useMutation({
       mutationFn: () => deleteAttachment(attachment.id),
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["job", jobId] });
-      },
+      onSuccess: () =>
+        queryClient.invalidateQueries({ queryKey: ["job", jobId] }),
     });
 
     return (
-      <List.Item
-        key={attachment.id}
-        icon={<Paperclip size={14} />}
-        style={{ display: "flex", justifyContent: "space-between" }}
-      >
-        <Group gap="xs" justify="space-between" w="100%">
-          <Anchor
-            href={attachment.file}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {attachment.filename || "Download file"} ({attachment.type})
-          </Anchor>
+      <>
+        <List.Item
+          icon={<Paperclip size={14} />}
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <Group gap="xs" justify="space-between" w="100%">
+            <Anchor component="button" onClick={open}>
+              {attachment.filename || "View file"} ({attachment.type})
+            </Anchor>
 
-          <Tooltip label="Delete attachment">
-            <ActionIcon
-              color="red"
-              variant="light"
-              size="sm"
-              onClick={() => mutation.mutate()}
-              loading={mutation.isPending}
-            >
-              <Trash size={14} />
-            </ActionIcon>
-          </Tooltip>
-        </Group>
-      </List.Item>
+            <Tooltip label="Delete attachment">
+              <ActionIcon
+                color="red"
+                variant="light"
+                size="sm"
+                onClick={() => mutation.mutate()}
+                loading={mutation.isPending}
+              >
+                <Trash size={14} />
+              </ActionIcon>
+            </Tooltip>
+          </Group>
+        </List.Item>
+
+        <FileViewerModal
+          opened={opened}
+          onClose={close}
+          fileUrl={attachment.file}
+          filename={attachment.filename}
+          mimeType={attachment.mime_type}
+        />
+      </>
     );
   }
 

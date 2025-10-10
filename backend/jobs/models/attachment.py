@@ -3,6 +3,8 @@ import mimetypes
 from django.db import models
 from django.core.exceptions import ValidationError
 
+mimetypes.add_type("text/markdown", ".md")
+
 
 def validate_file_type(value):
     """Allow only PDF, Markdown, or plain text files."""

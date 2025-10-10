@@ -13,3 +13,4 @@ services:
       MINIO_ROOT_PASSWORD: password
     volumes:
       - ./minio-data:/data
+      - ./policies:/policies
