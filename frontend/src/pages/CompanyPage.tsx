@@ -6,11 +6,11 @@ import {
   Text,
   Loader,
   Center,
-  Table,
   Button,
   Group,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import CompanyTable from "../components/CompanyTable";
 
 export default function CompanyPage() {
   const navigate = useNavigate();
@@ -46,39 +46,7 @@ export default function CompanyPage() {
         </Button>
       </Group>
 
-      <Table highlightOnHover withTableBorder striped>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Name</Table.Th>
-            <Table.Th>Website</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-
-        <Table.Tbody>
-          {companies.map((company) => (
-            <Table.Tr
-              key={company.id}
-              onClick={() => navigate(`/companies/${company.id}`)}
-              style={{ cursor: "pointer" }}
-            >
-              <Table.Td fw={500}>{company.name}</Table.Td>
-              <Table.Td>
-                {company.website ? (
-                  <a
-                    href={company.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {company.website}
-                  </a>
-                ) : (
-                  "—"
-                )}
-              </Table.Td>
-            </Table.Tr>
-          ))}
-        </Table.Tbody>
-      </Table>
+      <CompanyTable companies={companies} />
     </Container>
   );
 }
