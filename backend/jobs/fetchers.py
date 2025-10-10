@@ -1,5 +1,7 @@
 import requests
 from requests.adapters import HTTPAdapter, Retry
+from .parsers import parse_job_post_html
+
 
 HEADERS = {
     "User-Agent": "CTS-LocalFetcher/0.1 (local dev)"
@@ -23,3 +25,10 @@ def fetch_job_post_html(url: str, timeout=(5, 15)):
         raise ValueError(
             f"Non-HTML content type: {resp.headers.get('content-type')}")
     return resp.text
+
+
+def fetch_and_parse_job_post(url: str) -> dict:
+    """Fetch HTML and return parsed fields."""
+    from .fetchers import fetch_job_post_html
+    html = fetch_job_post_html(url)
+    return parse_job_post_html(html, url)

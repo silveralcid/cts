@@ -10,3 +10,5 @@ faker
 boto3
 django-storages
 requests
+lxml
+beautifulsoup4
