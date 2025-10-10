@@ -7,12 +7,14 @@ import {
   Checkbox,
   Button,
   Group,
+  Divider,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createJob, updateJob } from "../api/jobs";
 import { getCompanies } from "../api/companies";
 import { useNavigate } from "react-router-dom";
+import { DatePickerInput } from "@mantine/dates";
 
 interface JobFormProps {
   mode?: "create" | "edit";
@@ -56,6 +58,15 @@ export default function JobForm({ mode = "create", job }: JobFormProps) {
       salary_max: job?.salary_max || "",
       salary_currency: job?.salary_currency || "USD",
       job_notes: job?.job_notes || "",
+
+      // ✅ Dates
+      date_posted: job?.date_posted || null,
+      date_applied: job?.date_applied || null,
+      date_interviewed: job?.date_interviewed || null,
+      date_offered: job?.date_offered || null,
+      date_deadline: job?.date_deadline || null,
+      date_accepted: job?.date_accepted || null,
+      date_rejected: job?.date_rejected || null,
     },
     validate: {
       company_id: (value) => (!value ? "Company is required" : null),
@@ -151,9 +162,81 @@ export default function JobForm({ mode = "create", job }: JobFormProps) {
             { value: "CAD", label: "CAD" },
             { value: "AUD", label: "AUD" },
             { value: "JPY", label: "JPY" },
+            { value: "OTHER", label: "Other" },
           ]}
           {...form.getInputProps("salary_currency")}
         />
+
+        {/* ---- Dates Section ---- */}
+        <Divider label="Dates" my="sm" />
+
+        <Group grow>
+          <DatePickerInput
+            label="Date Posted"
+            placeholder="Select date"
+            dropdownType="popover"
+            popoverProps={{ withinPortal: true }}
+            size="sm"
+            {...form.getInputProps("date_posted")}
+          />
+          <DatePickerInput
+            label="Date Applied"
+            placeholder="Select date"
+            dropdownType="popover"
+            popoverProps={{ withinPortal: true }}
+            size="sm"
+            {...form.getInputProps("date_applied")}
+          />
+        </Group>
+
+        <Group grow>
+          <DatePickerInput
+            label="Interview Date"
+            placeholder="Select date"
+            dropdownType="popover"
+            popoverProps={{ withinPortal: true }}
+            size="sm"
+            {...form.getInputProps("date_interviewed")}
+          />
+          <DatePickerInput
+            label="Offer Date"
+            placeholder="Select date"
+            dropdownType="popover"
+            popoverProps={{ withinPortal: true }}
+            size="sm"
+            {...form.getInputProps("date_offered")}
+          />
+        </Group>
+
+        <Group grow>
+          <DatePickerInput
+            label="Deadline"
+            placeholder="Select date"
+            dropdownType="popover"
+            popoverProps={{ withinPortal: true }}
+            size="sm"
+            {...form.getInputProps("date_deadline")}
+          />
+          <DatePickerInput
+            label="Accepted Date"
+            placeholder="Select date"
+            dropdownType="popover"
+            popoverProps={{ withinPortal: true }}
+            size="sm"
+            {...form.getInputProps("date_accepted")}
+          />
+          <DatePickerInput
+            label="Rejected Date"
+            placeholder="Select date"
+            dropdownType="popover"
+            popoverProps={{ withinPortal: true }}
+            size="sm"
+            {...form.getInputProps("date_rejected")}
+          />
+        </Group>
+
+        {/* ---- Descriptive ---- */}
+        <Divider label="Details" my="sm" />
 
         <Textarea
           label="About"
