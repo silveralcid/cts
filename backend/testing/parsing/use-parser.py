@@ -49,7 +49,7 @@ if __name__ == "__main__":
             with open(file_path, "r", encoding="utf-8") as f:
                 html = f.read()
 
-            parsed = parse_core(html, URL)
+            parsed = parse_core(html)
 
             out.write("=" * 70 + "\n")
             out.write(f"Parsed file: {os.path.basename(file_path)}\n")
