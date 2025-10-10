@@ -1,0 +1,66 @@
+======================================================================
+Parsed file: honehealth-senior-ai-engineer.html
+----------------------------------------------------------------------
+position_title: Senior AI Engineer
+company: Hone Health
+job_post_url: https://job-boards.greenhouse.io/honehealth/jobs/4945588008
+domain: job-boards.greenhouse.io
+
+location: Remote (US)
+is_remote: True
+department: Artificial Intelligence
+employment_type: Full-time
+role_type: IC
+
+salary_currency: USD
+salary_min: 145000.00
+salary_max: 185000.00
+salary_raw: $145,000 - $185,000 USD annually
+
+date_posted: 2025-02-21
+
+about:
+Hone Health is building the future of men’s health — a digital clinic offering
+telemedicine, personalized care plans, and ongoing treatment optimization. Our
+team combines clinical expertise and technology to make care accessible,
+affordable, and genuinely patient-centered.
+
+responsibilities:
+- Build and deploy production-scale LLM-powered systems to support clinical operations
+- Collaborate with data science and product teams to prototype new models
+- Design and implement scalable AI pipelines in Python and PyTorch
+- Mentor junior engineers and review code for quality and performance
+
+requirements:
+- 5+ years of professional experience in machine learning or data engineering
+- Strong Python and SQL skills
+- Deep understanding of transformer architectures
+- Experience deploying models in AWS or GCP
+- Bachelor’s or higher degree in Computer Science, Engineering, or related field
+
+benefits:
+- Competitive salary and equity
+- Comprehensive health, dental, and vision insurance
+- 401(k) with company match
+- Generous PTO and remote-first flexibility
+- Annual learning stipend
+
+education:
+{
+    "degree_level": "Bachelor’s or higher",
+    "majors": ["Computer Science", "Engineering", "Related field"]
+}
+
+licenses_certifications: []
+security_clearances: []
+
+languages: ["Python", "SQL"]
+travel_requirements: Occasional (<10%)
+benefits_perks: ["Health Insurance", "401(k)", "Remote Work", "Equity", "Learning Stipend"]
+
+----------------------------------------------------------------------
+✅ Parsing Summary:
+Successfully extracted 17/20 mapped fields (85%)
+Source contained structured JSON-LD data for schema.org/JobPosting.
+Parser filled all major categories: title, salary, description, requirements, benefits, and metadata.
+======================================================================
