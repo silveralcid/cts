@@ -38,7 +38,7 @@ export default function CompanyPage() {
     );
 
   return (
-    <Container>
+    <Container fluid>
       <Group justify="space-between" mb="md">
         <Title order={2}>Companies</Title>
         <Button onClick={() => navigate("/companies/new")} color="blue">

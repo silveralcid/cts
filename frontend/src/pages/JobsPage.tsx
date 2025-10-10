@@ -55,7 +55,7 @@ export default function JobsPage() {
     );
 
   return (
-    <Container>
+    <Container fluid p="md">
       <Group justify="space-between" mb="md">
         <Title order={2}>Jobs</Title>
         <Button onClick={() => navigate("/jobs/new")} color="blue">
