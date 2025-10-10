@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from ..fetchers import fetch_job_post_html
 
 
 class Job(models.Model):
@@ -154,3 +155,13 @@ class Job(models.Model):
 
     def __str__(self):
         return f"{self.position_title} at {self.company.name}"
+
+    def fetch_post_preview(self):
+        """Fetch and return a short HTML preview for admin use."""
+        if not self.job_post_url:
+            return "(no job_post_url set)"
+        try:
+            html = fetch_job_post_html(self.job_post_url)
+            return html[:1500]  # trim to 1.5KB for admin preview
+        except Exception as e:
+            return f"Error: {e}"

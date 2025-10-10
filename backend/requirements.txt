@@ -9,3 +9,4 @@ django-cors-headers
 faker
 boto3
 django-storages
+requests
