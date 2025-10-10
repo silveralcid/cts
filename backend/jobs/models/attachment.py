@@ -4,14 +4,16 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 mimetypes.add_type("text/markdown", ".md")
+mimetypes.add_type("text/html", ".html")
 
 
 def validate_file_type(value):
-    """Allow only PDF, Markdown, or plain text files."""
+    """Allow only PDF, Markdown, HTML, or plain text files."""
     allowed_mime_types = [
         "application/pdf",
         "text/plain",
         "text/markdown",
+        "text/html",
     ]
     mime_type, _ = mimetypes.guess_type(value.name)
     if mime_type not in allowed_mime_types:
@@ -25,6 +27,7 @@ class Attachment(models.Model):
     TYPE_CHOICES = [
         ("resume", "Resume"),
         ("job_details", "Job Details"),
+        ("job_post", "Job Post"),
         ("other_document", "Other Document"),
     ]
 
