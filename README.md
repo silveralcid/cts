@@ -1,4 +1,4 @@
-
+ffffffffffffffffffffffffffffffffffffffffffffffff
 # 🧭 Career Tracking System (CTS)
 
 ## Quick Notes
@@ -13,11 +13,11 @@ mc anonymous set public local/cts-local
 
 Run it
 
-Build and start everything:
-`docker compose up --build`
-
 Initialize DB (first run):
 `docker compose exec backend python manage.py migrate`
+
+Build and start everything:
+`docker compose up --build`
 
 Optional seed: 
 
