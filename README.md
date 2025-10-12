@@ -8,7 +8,6 @@ Download MinIO mc client, windows add to path: https://www.min.io/download?platf
 ```
 mc alias set local http://localhost:9000 admin password
 mc anonymous set public local/cts-local
-
 ```
 
 Run it
