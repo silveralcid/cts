@@ -2,12 +2,7 @@
 
 ## Quick Notes
 
-Download MinIO mc client, windows add to path: https://www.min.io/download?platform=windows
-
-```
-mc alias set local http://localhost:9000 admin password
-mc anonymous set public local/cts-local
-```
+### Docker Dev Env
 
 Run it
 
@@ -26,6 +21,16 @@ Frontend: http://localhost:5173
 Backend API: http://localhost:8000/api
 Backend Dashboard: http://localhost:8000/admin (admin/password)
 MinIO Console: http://localhost:9001 (admin/password)
+
+
+### Local Dev Env
+
+Download MinIO mc client, windows add to path: https://www.min.io/download?platform=windows
+
+```
+mc alias set local http://localhost:9000 admin password
+mc anonymous set public local/cts-local
+```
 
 ## 📄 Project Summary
 Career Tracking System (CTS) is an **open-source web app** that helps job seekers organize their entire job search pipeline. It centralizes job listings, resumes, application statuses, key dates, and notes—all within a **fast, minimalist interface**.  
