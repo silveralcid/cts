@@ -1,4 +1,3 @@
-ffffffffffffffffffffffffffffffffffffffffffffffff
 # 🧭 Career Tracking System (CTS)
 
 ## Quick Notes
