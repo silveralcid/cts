@@ -14,3 +14,54 @@ services:
     volumes:
       - ./minio-data:/data
       - ./policies:/policies
+
+  minio-init:
+    image: minio/mc
+    container_name: minio-init
+    depends_on:
+      - minio
+    entrypoint: ["/bin/sh", "-c"]
+    command: >-
+      /bin/sh -c "
+      until (/usr/bin/mc alias set local http://minio:9000 admin password) do echo 'waiting for minio...' && sleep 2; done;
+      /usr/bin/mc mb --ignore-existing local/cts-local;
+      /usr/bin/mc anonymous set public local/cts-local;
+      exit 0;"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: cts-backend
+    environment:
+      # Point Django to MinIO service inside compose network
+      AWS_S3_ENDPOINT_URL: http://minio:9000
+      AWS_ACCESS_KEY_ID: admin
+      AWS_SECRET_ACCESS_KEY: password
+      AWS_STORAGE_BUCKET_NAME: cts-local
+      # Allow requests from host and containers
+      ALLOWED_HOSTS: "localhost,127.0.0.1,0.0.0.0"
+      DEBUG: "1"
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - minio
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: cts-frontend
+    environment:
+      # Keep pointing to host-exposed backend so the browser can reach it
+      VITE_API_URL: http://localhost:8000/api
+    volumes:
+      - ./frontend:/app
+      # Keep node_modules inside container to avoid host overlay issues
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend

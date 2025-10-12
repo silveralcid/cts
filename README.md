@@ -11,6 +11,24 @@ mc anonymous set public local/cts-local
 
 ```
 
+Run it
+
+Build and start everything:
+`docker compose up --build`
+
+Initialize DB (first run):
+`docker compose exec backend python manage.py migrate`
+
+Optional seed: 
+
+`docker compose exec backend python manage.py seed_data`
+
+Open:
+Frontend: http://localhost:5173
+Backend API: http://localhost:8000/api
+Backend Dashboard: http://localhost:8000/admin (admin/password)
+MinIO Console: http://localhost:9001 (admin/password)
+
 ## 📄 Project Summary
 Career Tracking System (CTS) is an **open-source web app** that helps job seekers organize their entire job search pipeline. It centralizes job listings, resumes, application statuses, key dates, and notes—all within a **fast, minimalist interface**.  
 The goal is to make personal career management more structured, searchable, and exportable.

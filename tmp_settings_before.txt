@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,12 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-fz6=heiu*m%1a2s610(%azf!i1ndk6o4m8_)cc&2_i)th)7+ws'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Make DEBUG configurable via env (default True for dev)
-DEBUG = os.getenv("DEBUG", "True").lower() in ("1", "true", "yes")
+DEBUG = True
 
-# Allow overriding hosts (comma-separated), e.g., "localhost,127.0.0.1"
-_allowed_hosts = os.getenv("ALLOWED_HOSTS", "").strip()
-ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts.split(",") if h.strip()] if _allowed_hosts else []
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -160,14 +156,13 @@ CORS_ALLOW_CREDENTIALS = True
 
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-# Read S3/MinIO settings from env so containers can talk over service DNS
-AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL", "http://localhost:9000")
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "admin")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "password")
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "cts-local")
-AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-1")
-AWS_S3_SIGNATURE_VERSION = os.getenv("AWS_S3_SIGNATURE_VERSION", "s3v4")
-AWS_S3_USE_SSL = os.getenv("AWS_S3_USE_SSL", "False").lower() in ("1", "true", "yes")
+AWS_S3_ENDPOINT_URL = "http://localhost:9000"
+AWS_ACCESS_KEY_ID = "admin"
+AWS_SECRET_ACCESS_KEY = "password"
+AWS_STORAGE_BUCKET_NAME = "cts-local"
+AWS_S3_REGION_NAME = "us-east-1"
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_USE_SSL = False
 
 # Optional: auto-create bucket if it doesn’t exist (safe for MinIO, not AWS)
 AWS_S3_CREATE_BUCKET = True
