@@ -6,14 +6,13 @@
 
 Run it
 
-Initialize DB (first run):
-`docker compose exec backend python manage.py migrate`
-
 Build and start everything:
 `docker compose up --build`
 
-Optional seed: 
+Initialize DB (first run):
+`docker compose exec backend python manage.py migrate`
 
+Optional seed: 
 `docker compose exec backend python manage.py seed_data`
 
 Open:
