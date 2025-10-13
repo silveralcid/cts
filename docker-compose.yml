@@ -65,3 +65,16 @@ services:
       - "5173:5173"
     depends_on:
       - backend
+
+
+  landing:
+    build:
+      context: .
+      dockerfile: landing/Dockerfile
+    container_name: cts-landing
+    volumes:
+    - ./landing:/app
+    - /app/node_modules
+    ports:
+    - "3000:3000"
+      
