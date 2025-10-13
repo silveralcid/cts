@@ -19,7 +19,7 @@ import { getJobs } from "../api/jobs";
 import JobTable from "../components/JobTable";
 import { useNavigate } from "react-router-dom";
 
-export default function JobsPage() {
+export default function JobPage() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);

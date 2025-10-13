@@ -5,7 +5,7 @@ import "@mantine/dates/styles.css";
 import "@mantine/core/styles.css";
 
 import NavbarMinimal from "./components/NavbarMinimal";
-import JobsPage from "./pages/JobsPage";
+import JobPage from "./pages/JobPage";
 import JobDetailPage from "./pages/JobDetailPage";
 import CompanyPage from "./pages/CompanyPage";
 import CompanyDetailPage from "./pages/CompanyDetailPage";
@@ -31,7 +31,7 @@ export default function App() {
 
           <AppShell.Main>
             <Routes>
-              <Route path="/jobs" element={<JobsPage />} />
+              <Route path="/jobs" element={<JobPage />} />
               <Route path="/jobs/:id" element={<JobDetailPage />} />
               <Route path="/companies" element={<CompanyPage />} />
               <Route path="/companies/:id" element={<CompanyDetailPage />} />
