@@ -16,6 +16,7 @@ Optional seed:
 `docker compose exec backend python manage.py seed_data`
 
 Open:
+Landing: http://localhost:3000/
 Frontend: http://localhost:5173
 Backend API: http://localhost:8000/api
 Backend Dashboard: http://localhost:8000/admin (admin/password)
