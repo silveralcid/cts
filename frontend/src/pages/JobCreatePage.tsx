@@ -184,6 +184,13 @@ export default function JobCreatePage() {
           />
 
           <TextInput
+            label="Job Post URL"
+            placeholder="https://company.com/job"
+            required
+            {...form.getInputProps("job_post_url")}
+          />
+
+          <TextInput
             label="Location"
             placeholder="e.g. Remote, New York, NY"
             {...form.getInputProps("location")}
@@ -216,12 +223,6 @@ export default function JobCreatePage() {
             min={1}
             max={5}
             {...form.getInputProps("priority")}
-          />
-
-          <TextInput
-            label="Job Post URL"
-            placeholder="https://company.com/job"
-            {...form.getInputProps("job_post_url")}
           />
 
           <TextInput
