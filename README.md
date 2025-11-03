@@ -25,6 +25,12 @@ MinIO Console: http://localhost:9001 (admin/password)
 
 ### Local Dev Env
 
+frontend - `npm run dev`
+backend - `.\venv\Scripts\Activate.ps1` and `python manage.py runserver`
+`python manage.py migrate`
+`python manage.py seed_data`
+`python manage.py makemigrations  `
+
 Download MinIO mc client, windows add to path: https://www.min.io/download?platform=windows
 
 ```
