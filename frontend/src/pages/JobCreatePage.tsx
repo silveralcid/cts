@@ -24,7 +24,6 @@ export default function JobCreatePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // ✅ Fetch companies for dropdown
   const {
     data: companies = [],
     isLoading: loadingCompanies,

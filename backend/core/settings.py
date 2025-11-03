@@ -30,7 +30,8 @@ DEBUG = os.getenv("DEBUG", "True").lower() in ("1", "true", "yes")
 
 # Allow overriding hosts (comma-separated), e.g., "localhost,127.0.0.1"
 _allowed_hosts = os.getenv("ALLOWED_HOSTS", "").strip()
-ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts.split(",") if h.strip()] if _allowed_hosts else []
+ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts.split(",")
+                 if h.strip()] if _allowed_hosts else []
 
 
 # Application definition
@@ -146,6 +147,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+# CSRF Trusted Origins
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://localhost:5173",
+    "https://127.0.0.1:5173"
+]
+
 
 # CORS Production Configuration
 # CORS_ALLOWED_ORIGINS = [
@@ -167,7 +176,8 @@ AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "password")
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "cts-local")
 AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-1")
 AWS_S3_SIGNATURE_VERSION = os.getenv("AWS_S3_SIGNATURE_VERSION", "s3v4")
-AWS_S3_USE_SSL = os.getenv("AWS_S3_USE_SSL", "False").lower() in ("1", "true", "yes")
+AWS_S3_USE_SSL = os.getenv(
+    "AWS_S3_USE_SSL", "False").lower() in ("1", "true", "yes")
 
 # Optional: auto-create bucket if it doesn’t exist (safe for MinIO, not AWS)
 AWS_S3_CREATE_BUCKET = True
